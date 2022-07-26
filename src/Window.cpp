@@ -23,6 +23,10 @@ void Window::Setup(const std::string& l_title, const sf::Vector2u& l_size){
 	m_eventManager.AddCallback("Window_close", &Window::Close, this); 
 	m_eventManager.AddCallback("cunt", &Window::cunt, this); 
 	Create(); 
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)
+	// {
+	// 	// move left...
+	// }
 
 }
 void Window::Create() {

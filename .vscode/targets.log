@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Mon Jul 25 00:53:07 2022
+# Make data base, printed on Mon Jul 25 18:36:24 2022
 
 # Variables
 
@@ -31,7 +32,8 @@ HOMEDRIVE = C:
 # automatic
 @F = $(notdir $@)
 # automatic
-^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
+^D = $(patsubst 
+ %/,%,$(patsubst %\,%,$(dir $^)))
 # makefile
 CURDIR := f:/Coding/cpp - in progress/Tetris
 # default
@@ -66,8 +68,7 @@ MAKE_HOST := i686-w64-mingw32
 PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\raylib\w64devkit\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Inkscape\bin;C:\Latexindent;C:\Program Files\nodejs\;C:\Users\Burakki\AppData\Local\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files\SignPath Foundation\Amethyst Windows;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\;C:\Users\Burakki\AppData\Local\Microsoft\WindowsApps;C:\Users\Burakki\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\mingw64\bin;C:\Users\Burakki\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\raylib\w64devkit\bin;C:\Users\Burakki\.dotnet\tools;C:\Users\Burakki\AppData\Roaming\npm
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
-# environme 
-nt
+# environment
 PROCESSOR_ARCHITECTURE = x86
 # environment
 USERPROFILE = C:\Users\Burakki
@@ -122,7 +123,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from 'Makefile', line 2)
-CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb
+CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb -w
 # default
 MAKE_VERSION := 4.2
 # makefile
@@ -220,10 +221,10 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-TL8QFHP
 
 # Directories
 
-# . (key f:/Coding/cpp - in progress/Tetris, mtime 1658724666ll): 19 files, no impossibilities.
-# src (key f:/Coding/cpp - in progress/Tetris/src, mtime 1658724755ll): 5 files, no impossibilities.
+# . (key f:/Coding/cpp - in progress/Tetris, mtime 1658750796ll): 23 files, no impossibilities.
+# src (key f:/Coding/cpp - in progress/Tetris/src, mtime 1658725497ll): 12 files, no impossibilities.
 
-# 24 files, no impossibilities in 2 directories.
+# 35 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -241,6 +242,13 @@ all: bin/main
 # Load=0/32=0%, Rehash=0, Collisions=0/7=0%
 
 # Not a target:
+src/Tetris.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-25 18:35:36
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 .SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -249,14 +257,21 @@ all: bin/main
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 00:45:56
+#  Last modified 2022-07-25 18:36:05
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+src/EventManager.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2021-07-09 19:02:03
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/Game.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2021-07-14 20:08:03
+#  Last modified 2022-07-25 03:57:15
 #  File has been updated.
 #  Successfully updated.
 
@@ -284,11 +299,11 @@ clean:
 # Not a target:
 src/main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 00:34:25
+#  Last modified 2022-07-25 01:00:47
 #  File has been updated.
 #  Successfully updated.
 
-bin/main: src/main.cpp src/Window.cpp src/Game.cpp
+bin/main: src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
@@ -301,15 +316,15 @@ bin/main: src/main.cpp src/Window.cpp src/Game.cpp
 # automatic
 # * := 
 # automatic
-# + := src/main.cpp src/Window.cpp src/Game.cpp
+# + := src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp
 # automatic
 # | := 
 # automatic
 # < := src/main.cpp
 # automatic
-# ^ := src/main.cpp src/Window.cpp src/Game.cpp
+# ^ := src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp
 # automatic
-# ? := src/main.cpp src/Window.cpp src/Game.cpp
+# ? := src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=2/17=12%
 #  recipe to execute (from 'Makefile', line 20):
@@ -318,24 +333,25 @@ bin/main: src/main.cpp src/Window.cpp src/Game.cpp
 # Not a target:
 src/Window.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2021-07-09 13:29:49
+#  Last modified 2022-07-25 01:14:20
 #  File has been updated.
 #  Successfully updated.
 
 # files hash-table stats:
-# Load=10/1024=1%, Rehash=0, Collisions=0/30=0%
+# Load=12/1024=1%, Rehash=0, Collisions=0/34=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 361 B / avg = 11 B
-# current buf: size = 8174 B / used = 361 B / count = 31 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 43 / storage = 494 B / avg = 11 B
+# current buf: siz 
+e = 8174 B / used = 494 B / count = 43 / avg = 11 B
 
-# strcache performance: lookups = 46 / hit rate = 32%
+# strcache performance: lookups = 59 / hit rate = 27%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=2/46=4%
-# Finished Make data base on Mon Jul 25 00:53:07 2022
+# Load=43/8192=1%, Rehash=0, Collisions=2/59=3%
+# Finished Make data base on Mon Jul 25 18:36:24 2022
 
  

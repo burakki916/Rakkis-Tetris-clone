@@ -4,8 +4,9 @@ Game::Game()
 {
 	//m_window.ToggleFullscreen();
 
-	m_window.GetEventManager()->AddCallback("Move", &Game::MoveSprite, this);
+	//m_window.GetEventManager()->AddCallback("Move", &Game::MoveSprite, this);
 	tetris.initialize(); 
+	tetris.initializeInput(&m_window);
 }
 Game::~Game() {}
 
@@ -17,11 +18,12 @@ void Game::handleInput()
 void Game::Update()
 {
 	m_window.Update(); 
-	m_elapsed = m_clock.getElapsedTime(); 
-	float timestep = 1.0f / 0.011;
-	if (m_elapsed > sf::seconds(5)) {
-		//myFirework.SetTrailColors({ sf::Color::Blue, sf::Color::Red });
-	}
+	// m_elapsed = m_clock.getElapsedTime(); 
+	// float timestep = 1.0f / 0.011;
+	// if (m_elapsed > sf::seconds(5)) {
+		
+	// }
+	tetris.update(); 
 
 }
 
@@ -47,9 +49,4 @@ void Game::RestartClock()
 	m_elapsed = m_clock.restart(); 
 }
 
-void Game::MoveSprite(EventDetails* l_details)
-{
-	sf::Vector2i mousepos = m_window.GetEventManager()->GetMousePos(m_window.GetRenderWindow());
-	myBox.setPosition(mousepos.x, mousepos.y); 
-	std::cout << "moving sprite to : (" << mousepos.x << "," << mousepos.y << ")" << std::endl;
-}
+

@@ -31,6 +31,7 @@ struct EventInfo {
 		int m_code;
 	};
 
+
 };
 using Events = std::vector<std::pair<EventType, EventInfo>>;
 struct EventDetails {
