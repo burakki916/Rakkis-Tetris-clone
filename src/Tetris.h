@@ -31,6 +31,7 @@ public:
     Tetris();
     void initialize();
     void initializeInput(Window* l_window);
+    void restart(); 
     void update(); 
     void render(Window* l_window);
     void renderSavedPiece(Window* l_window);
@@ -137,7 +138,7 @@ private:
     sf::Vector2f boardPos= sf::Vector2f(0,0);
     sf::Vector2f margin =  sf::Vector2f(0,0);
     float tileBoarderSize = 1;
-    float gravity = 200; //in tiles per milisecond
+    float gravity = 800; //in tiles per milisecond
     int queueSize = 4; 
 
     pieceEntity fallingPiece;
