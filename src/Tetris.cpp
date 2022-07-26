@@ -18,7 +18,8 @@ void Tetris::initialize(){
     //insert code for initializing the event manager to make bindings for the various things that require input 
 
     board.clear(); 
-    boardColors.clear(); 
+    boardColors.clear();
+    score = 0; 
     //make the board 
     for(int y = 0; y < verticalBlocks; y++){
         std::vector<int> curRow;
