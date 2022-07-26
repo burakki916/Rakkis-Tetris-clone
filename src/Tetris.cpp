@@ -12,31 +12,30 @@ Tetris::Tetris(){//ugg i gottta fix this default constructor shit later;
 }
 void Tetris::initialize(){
     //insert code for initializing the event manager to make bindings for the various things that require input 
-    
+
+    board.clear(); 
+    boardColors.clear(); 
     //make the board 
     for(int y = 0; y < verticalBlocks; y++){
-        std::vector<int> curRow; 
+        std::vector<int> curRow;
+        std::vector<colors> curColorRow;  
         for(int x =0; x<horizontalBlocks; x++){
             curRow.push_back(0);
+            curColorRow.push_back(colors::background); 
         }
         board.push_back(curRow);
+        boardColors.push_back(curColorRow); 
     }
     //load pieces into the queue 
     bagGenerator(bag1);
     bagGenerator(bag2);
+    savedPiece = pieceTypes::non;
+
     spawner();
 
 }
 void Tetris::restart(){
-    for(int y = 0; y < verticalBlocks; y++){ 
-        for(int x =0; x<horizontalBlocks; x++){
-            board[y][x] = 0; 
-        }
-    }
-    //load pieces into the queue 
-    bagGenerator(bag1);
-    bagGenerator(bag2);
-    spawner();
+    initialize(); 
 }
 void Tetris::initializeInput(Window* l_window){
     std::cout << "trying to handle input" << std::endl; 
@@ -74,7 +73,7 @@ void Tetris::render(Window* l_window){
     sf::RectangleShape background; 
     background.setSize(boardSizeExact);
     background.setPosition(boardPos);
-    background.setFillColor(sf::Color::White);
+    background.setFillColor(sf::Color::Black);
     l_window->Draw(background);//makes the background white
     
     for(int y = bonusHeight; y < verticalBlocks; y++){ 
@@ -86,24 +85,12 @@ void Tetris::render(Window* l_window){
            sf::RectangleShape rectangle;
            rectangle.setSize(sf::Vector2f(tileWidth-(2*tileBoarderSize),tileHeight-(2*tileBoarderSize)));
            rectangle.setPosition(position.x+ tileBoarderSize,position.y+tileBoarderSize);
-            switch(board[y][x]){ //i forgot to worry about colors, so now everything is going to look weird for now 
-                case clear :
-                    rectangle.setFillColor(sf::Color::Black);
-                    break;  
-                case alive :
-                    rectangle.setFillColor(sf::Color::Cyan);
-                    break;
-
-                case dead :
-                    rectangle.setFillColor(sf::Color::Red);
-                    break;   
-                case ghost :
-                    rectangle.setFillColor(sf::Color::Blue);
-                    break;  
-                default : 
-                    rectangle.setFillColor(sf::Color::Black);
-                    break;  
-            } 
+            if(board[y][x]!=tileTypes::clear){
+                rectangle.setFillColor(pallet[boardColors[y][x]]);
+            } else {
+                rectangle.setFillColor(pallet[colors::background]);
+            }
+            
            l_window->Draw(rectangle);     
         }
     }
@@ -114,7 +101,7 @@ void Tetris::render(Window* l_window){
 
     //place rendering code for the saved piece 
 
-    int savedPadding = 0.5;
+    float savedPadding = 0.1;
     sf::Vector2f savedTilePosition = sf::Vector2f((margin.x *savedPadding),margin.x *savedPadding);
     float savedTileSize = (margin.x * (1-savedPadding)) / 8; 
 
@@ -124,8 +111,8 @@ void Tetris::render(Window* l_window){
                 if(pieces[savedPiece][y][x]==1){
                     sf::RectangleShape tile; 
                     tile.setSize(sf::Vector2f(savedTileSize-1,savedTileSize-1));
-                    tile.setPosition(x*savedTileSize,y*savedTileSize);
-                    tile.setFillColor(sf::Color::Cyan);
+                    tile.setPosition(savedTilePosition.x+ x*savedTileSize,savedTilePosition.y+ y*savedTileSize);
+                    tile.setFillColor(pallet[savedPiece]);
                     l_window->Draw(tile);
                 }
             }
@@ -162,10 +149,12 @@ void Tetris::updatePiece(){
             //std::cout << "potential Block : (" << xBlock << "," << yBlock << ")" <<std::endl;
             if(fallingPiece.pieceArray[y][x] ==  tileTypes::alive){//check to see if in the piece array, if the piece is alive
                 board[yBlock][xBlock] =1; //updates the board to make that part alive
-            }else{ //if the array piece isnt alive, make sure its not alive on the board 
-                if(board[yBlock][xBlock] != tileTypes::dead){ //making sure it doesnt clear an already dead piece 
-                    board[yBlock][xBlock] = tileTypes::clear; //clears the piece now that its not there anymore
-                }
+                boardColors[yBlock][xBlock] = (colors)fallingPiece.name;  
+                //the next else statement is no longer needed. 
+            }else{ //if the array piece isnt alive, make sure its not alive on the board // 
+                // if(board[yBlock][xBlock] != tileTypes::dead){ //making sure it doesnt clear an already dead piece 
+                //     board[yBlock][xBlock] = tileTypes::clear; //clears the piece now that its not there anymore
+                // }
             }
             
         }
@@ -207,7 +196,7 @@ void Tetris::spawner(pieceTypes type){
             fallingPiece.pieceArray[y][x] = pieces[fallingPiece.name][y][x];
         }
     }
-    sf::Vector2i nullDirection = sf::Vector2i(0,1);
+    sf::Vector2i nullDirection = sf::Vector2i(0,0);
     if(collisionCheck(nullDirection)){
         restart();  
     }

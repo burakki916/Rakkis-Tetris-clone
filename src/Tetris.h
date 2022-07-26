@@ -100,8 +100,26 @@ private:
                 {0, 0, 0, 0},
             };
     };
-
-
+    sf::Color pallet[8]={
+        sf::Color(114, 159, 250), //blue - bar 
+        sf::Color(203, 204, 53), //yellow - O 
+        sf::Color(121, 198, 207), //darkblue - J
+        sf::Color(218, 113, 84), //orange - L 
+        sf::Color(187, 142, 201), //purple - T
+        sf::Color(234, 89, 83), //red - Z
+        sf::Color(162, 216, 116), //green - S
+        sf::Color(41, 45, 62), //background
+    };
+    enum colors{
+        blue, 
+        yellow, 
+        darkblue, 
+        orange,
+        purple,
+        red,
+        green,
+        background,
+    };
 
     void updatePiece();
     void solidify();
@@ -134,6 +152,7 @@ private:
     const int verticalBlocks = 20 + bonusHeight; 
     
     tileContainer board;
+    std::vector<std::vector<colors>> boardColors;
     sf::Vector2f boardSizeRel = sf::Vector2f(1,1);
     sf::Vector2f boardPos= sf::Vector2f(0,0);
     sf::Vector2f margin =  sf::Vector2f(0,0);
