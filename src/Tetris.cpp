@@ -7,8 +7,12 @@ sf::Vector2i directions::right = sf::Vector2i(1,0);
 
 
 Tetris::Tetris(){//ugg i gottta fix this default constructor shit later; 
+    
     initialize(); 
     //idk do some initializtion shit here or smth 
+    if(!textFont.loadFromFile("./wendy.ttf")){
+        std::cout << "failed to load font! " << std::endl; 
+    }
 }
 void Tetris::initialize(){
     //insert code for initializing the event manager to make bindings for the various things that require input 
@@ -62,13 +66,13 @@ void Tetris::update(){
     */
 }
 void Tetris::render(Window* l_window){
-    float tileWidth = l_window->GetWindowSize().x/(horizontalBlocks);
+    float tileWidth = l_window->GetWindowSize().x/(horizontalBlocks); //adjust the way the board size and position is determined to be more dynamic. 
     float tileHeight = l_window->GetWindowSize().y/(verticalBlocks - bonusHeight);
     if(tileWidth>tileHeight) tileWidth = tileHeight; else tileHeight = tileWidth;
 
     margin = sf::Vector2f((l_window->GetWindowSize().x-(horizontalBlocks*tileWidth))/2,0);
     boardPos = margin; 
-    sf::Vector2f boardSizeExact = sf::Vector2f(tileWidth*horizontalBlocks, l_window->GetWindowSize().y * boardSizeRel.y);
+    boardSizeExact = sf::Vector2f(tileWidth*horizontalBlocks, l_window->GetWindowSize().y * boardSizeRel.y);
     
     sf::RectangleShape background; 
     background.setSize(boardSizeExact);
@@ -119,7 +123,7 @@ void Tetris::render(Window* l_window){
         }
     }
 
-
+    handleText(l_window); //handles rendering the score 
     //place rendering code for various stats 
 }
 void Tetris::updatePiece(){
@@ -266,7 +270,9 @@ void Tetris::clearCheck(){
             //develop an alogirthm that efficiently activates gravity on the remaining tiles 
         }
     }
-    std::cout << "we have " << i << "rows to clear " << std::endl; 
+    std::cout << "we have " << i << "rows to clear " << std::endl;
+    if(i!=-1) score+=pointsForRowsCleared[i]; //adds points depending on how many rows were filled
+
     for(auto itr : cleared){
         std::cout << itr << ","; 
     }
@@ -302,8 +308,8 @@ void Tetris::rotateC(EventDetails* l_details){
             {0, 0, 0, 0},
         };
 
-    for(int y = 0; y<4; y++){
-        for(int x = 0; x<4; x++){
+    for(int y = mod; y<4; y++){
+        for(int x = mod; x<4; x++){
             newMatrix[y][x] = fallingPiece.pieceArray[(3+mod)-x][y];
         }
     }
@@ -399,7 +405,7 @@ void Tetris::up(EventDetails* l_details){
     //std::cout << "pop!" << std::endl;
     if(fallingPiece.position.y == 0) return; 
     if(!collisionCheck(directions::up)){
-        fallingPiece.position += directions::up;
+        //fallingPiece.position += directions::up; //is only used for debugging purposes. commented out for playing
     }
 }
 void Tetris::down(EventDetails* l_details){
@@ -419,4 +425,13 @@ void Tetris::right(EventDetails* l_details){
     if(!collisionCheck(directions::right)){
         fallingPiece.position += directions::right;
     }
+}
+
+void Tetris::handleText(Window* window){
+    scoreText.setFont(textFont);
+    scoreText.setString ("Score : \n " + std::to_string(score)); 
+    scoreText.setCharacterSize(50);
+    scoreText.setFillColor(pallet[colors::blue]); //add your white then make it this
+    scoreText.setPosition(window->GetWindowSize().x*.80, 100); //make this better 
+    window->Draw(scoreText); 
 }

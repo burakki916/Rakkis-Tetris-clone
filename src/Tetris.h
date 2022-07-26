@@ -38,6 +38,9 @@ public:
     
     
 private:
+
+
+
     enum pieceTypes // the enum value is to allign with the corresponding piece in the piece array
     {
         non =-1,Bar,O,J,L,T,Z,S,
@@ -120,7 +123,8 @@ private:
         green,
         background,
     };
-
+    int pointsForRowsCleared[4] = {40,100,300,1200};
+    int score = 0; 
     void updatePiece();
     void solidify();
 
@@ -154,10 +158,12 @@ private:
     tileContainer board;
     std::vector<std::vector<colors>> boardColors;
     sf::Vector2f boardSizeRel = sf::Vector2f(1,1);
+    sf::Vector2f boardSizeExact = sf::Vector2f(0,0);
     sf::Vector2f boardPos= sf::Vector2f(0,0);
     sf::Vector2f margin =  sf::Vector2f(0,0);
     float tileBoarderSize = 1;
-    float gravity = 800; //in tiles per milisecond
+    float gravity = 400; // in how many miliseconds till it increments 
+    //need to figure out a way to make the gravity match the real games 
     int queueSize = 4; 
 
     pieceEntity fallingPiece;
@@ -166,6 +172,8 @@ private:
     bagContainer bag1;
     bagContainer bag2;
 
-
+    sf::Font textFont; 
+    sf::Text scoreText; 
+    void handleText(Window* window); 
       
 };
