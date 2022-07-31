@@ -5,9 +5,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Mon Jul 25 18:36:24 2022
+# Make data base, printed on Sun Jul 31 01:21:07 2022
 
 # Variables
 
@@ -32,8 +31,7 @@ HOMEDRIVE = C:
 # automatic
 @F = $(notdir $@)
 # automatic
-^D = $(patsubst 
- %/,%,$(patsubst %\,%,$(dir $^)))
+^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # makefile
 CURDIR := f:/Coding/cpp - in progress/Tetris
 # default
@@ -53,8 +51,6 @@ PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
-# environment
 TMP = C:\Users\Burakki\AppData\Local\Temp
 # environment
 PROGRAMW6432 = C:\Program Files
@@ -65,13 +61,17 @@ VSCODE_CWD = C:\Users\Burakki\AppData\Local\Programs\Microsoft VS Code
 # default
 MAKE_HOST := i686-w64-mingw32
 # environment
-PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\raylib\w64devkit\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Inkscape\bin;C:\Latexindent;C:\Program Files\nodejs\;C:\Users\Burakki\AppData\Local\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files\SignPath Foundation\Amethyst Windows;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\;C:\Users\Burakki\AppData\Local\Microsoft\WindowsApps;C:\Users\Burakki\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\mingw64\bin;C:\Users\Burakki\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\raylib\w64devkit\bin;C:\Users\Burakki\.dotnet\tools;C:\Users\Burakki\AppData\Roaming\npm
+PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\raylib\w64devkit\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Inkscape\bin;C:\Latexindent;C:\Program Files\nodejs\;C:\Users\Burakki\AppData\Local\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files\SignPath Foundation\Amethyst Windows;C:\ProgramData\chocolatey\bin;C:\Program Files\CMake\bin;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Burakki\AppData\Local\Programs\Python\Python39\;C:\Users\Burakki\AppData\Local\Microsoft\WindowsApps;C:\Users\Burakki\AppData\Local\Programs\Microsoft VS Code\bin;C:\msys64\mingw64\bin;C:\Users\Burakki\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\raylib\w64devkit\bin;C:\Users\Burakki\.dotnet\tools;C:\Users\Burakki\AppData\Roaming\npm;C:\SFML-2.5.1;C:\SFML-2.5.1\include;C:\SFML-2.5.1\lib;C:\msys64\mingw64\bin;
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# environment
+CHOCOLATEYLASTPATHUPDATE = 133031946730173577
 # environment
 PROCESSOR_ARCHITECTURE = x86
 # environment
 USERPROFILE = C:\Users\Burakki
+# environment
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
@@ -79,13 +79,13 @@ NUMBER_OF_PROCESSORS = 4
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # makefile (from 'Makefile', line 7)
-LIB := lib -L C:\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+LIB := lib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_14156_ZOKPZWXIELEZGBHO
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_16600_KMSSTKBJMSDGMPBL
 # environment
 COMPUTERNAME = DESKTOP-TL8QFHP
 # environment
@@ -103,7 +103,7 @@ PUBLIC = C:\Users\Public
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Burakki\AppData\Roaming\Code\CachedData\92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+VSCODE_CODE_CACHE_PATH = C:\Users\Burakki\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
@@ -123,15 +123,16 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # makefile (from 'Makefile', line 2)
-CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb -w
+CXX_FLAGS := -Wall -Wextra -std=c++11 -ggdb -w -static
 # default
 MAKE_VERSION := 4.2
 # makefile
 .DEFAULT_GOAL := all
 # makefile (from 'Makefile', line 6)
-INCLUDE := include -I C:\SFML-2.5.1\include
+INCLUDE := include -I C:\SFML-2.5.1\include -DSFML_STATIC
 # environment
-PROGRAMFILES(X86) = C:\Program Files (x86)
+PROGRAMFILES(X86) = C:\Program F 
+iles (x86)
 # automatic
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
 # environment
@@ -153,7 +154,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 1 Stepping 1, AuthenticAMD
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\e297adc413e13789cbc582ac4c223a8b-1.69.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\e297adc413e13789cbc582ac4c223a8b-1.69.2-main-sock
 # environment
 HOMEPATH = \Users\Burakki
 # environment
@@ -189,7 +190,7 @@ CXX := g++
 # environment
 LC_ALL = C
 # makefile (from 'Makefile', line 9)
-LIBRARIES := C:\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system
+LIBRARIES := C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -static-libgcc -static-libstdc++
 # automatic
 ^F = $(notdir $^)
 # default
@@ -207,9 +208,7 @@ LANG = C
 # environment
 PROCESSOR_LEVEL = 23
 # environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
-# environment
-VSCODE_PID = 14156
+VSCODE_PID = 16600
 # environment
 USERDOMAIN_ROAMINGPROFILE = DESKTOP-TL8QFHP
 # variable set hash-table stats:
@@ -221,8 +220,8 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-TL8QFHP
 
 # Directories
 
-# . (key f:/Coding/cpp - in progress/Tetris, mtime 1658750796ll): 23 files, no impossibilities.
-# src (key f:/Coding/cpp - in progress/Tetris/src, mtime 1658725497ll): 12 files, no impossibilities.
+# . (key f:/Coding/cpp - in progress/Tetris, mtime 1658825619ll): 24 files, no impossibilities.
+# src (key f:/Coding/cpp - in progress/Tetris/src, mtime 1658825613ll): 11 files, no impossibilities.
 
 # 35 files, no impossibilities in 2 directories.
 
@@ -244,7 +243,7 @@ all: bin/main
 # Not a target:
 src/Tetris.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 18:35:36
+#  Last modified 2022-07-26 05:23:07
 #  File has been updated.
 #  Successfully updated.
 
@@ -257,7 +256,7 @@ src/Tetris.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 18:36:05
+#  Last modified 2022-07-31 01:19:34
 #  File has been updated.
 #  Successfully updated.
 
@@ -271,7 +270,7 @@ src/EventManager.cpp:
 # Not a target:
 src/Game.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 03:57:15
+#  Last modified 2022-07-25 21:13:22
 #  File has been updated.
 #  Successfully updated.
 
@@ -294,12 +293,12 @@ clean:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 23):
-	-rm $(BIN)/*
+	-rm $(BIN)/*.
 
 # Not a target:
 src/main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 01:00:47
+#  Last modified 2022-07-28 07:43:40
 #  File has been updated.
 #  Successfully updated.
 
@@ -328,12 +327,12 @@ bin/main: src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManag
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=2/17=12%
 #  recipe to execute (from 'Makefile', line 20):
-	$(CXX) $^ $(CXX_FLAGS) -I$(INCLUDE) -L$(LIB)  -o $@
+	$(CXX) $^ $(CXX_FLAGS)  -I$(INCLUDE) -L$(LIB)  -o $@
 
 # Not a target:
 src/Window.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-25 01:14:20
+#  Last modified 2022-07-25 21:43:31
 #  File has been updated.
 #  Successfully updated.
 
@@ -345,13 +344,12 @@ src/Window.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 43 / storage = 494 B / avg = 11 B
-# current buf: siz 
-e = 8174 B / used = 494 B / count = 43 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 504 B / avg = 11 B
+# current buf: size = 8174 B / used = 504 B / count = 44 / avg = 11 B
 
-# strcache performance: lookups = 59 / hit rate = 27%
+# strcache performance: lookups = 59 / hit rate = 25%
 # hash-table stats:
-# Load=43/8192=1%, Rehash=0, Collisions=2/59=3%
-# Finished Make data base on Mon Jul 25 18:36:24 2022
+# Load=44/8192=1%, Rehash=0, Collisions=2/59=3%
+# Finished Make data base on Sun Jul 31 01:21:07 2022
 
  

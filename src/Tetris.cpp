@@ -40,6 +40,7 @@ void Tetris::initialize(){
 
 }
 void Tetris::restart(){
+    std::cout << "restarting!!" << std::endl; //!
     initialize(); 
 }
 void Tetris::initializeInput(Window* l_window){
@@ -56,15 +57,17 @@ void Tetris::initializeInput(Window* l_window){
 } 
 void Tetris::update(){
     //code for updating the position of the falling piece 
+    for(int y = 0; y<verticalBlocks; y++){ //make this into a function called clear board sometime 
+        for(int x = 0; x<horizontalBlocks; x++){
+            if(board[y][x]!=tileTypes::dead){
+                board[y][x] = tileTypes::clear;
+            }
+        }
+    }
+    updateGhostPiece(); 
     updatePiece(); 
     //if bag2.size = 0 bagGenerator(bag2)
-    /*
-    ---Bag Generation 
-        -In the beginning the game generates the 2 bags 
-        -Everytime a piece is used, the latest piece from bag 2 inserts at the end of bag 1
-        -the bags are each 7 pieces big (every bag contains one of each piece)
-        -bag 2 is only regenerated once bag 2 is empty
-    */
+
 }
 void Tetris::render(Window* l_window){
     float tileWidth = l_window->GetWindowSize().x/(horizontalBlocks); //adjust the way the board size and position is determined to be more dynamic. 
@@ -91,7 +94,14 @@ void Tetris::render(Window* l_window){
            rectangle.setSize(sf::Vector2f(tileWidth-(2*tileBoarderSize),tileHeight-(2*tileBoarderSize)));
            rectangle.setPosition(position.x+ tileBoarderSize,position.y+tileBoarderSize);
             if(board[y][x]!=tileTypes::clear){
-                rectangle.setFillColor(pallet[boardColors[y][x]]);
+                sf::Color drawColor = pallet[boardColors[y][x]];  
+                if(board[y][x] == tileTypes::ghost){
+                    drawColor.r*=.20;
+                    drawColor.g*=.20;  
+                    drawColor.b*=.20;    
+                }
+
+                rectangle.setFillColor(drawColor);
             } else {
                 rectangle.setFillColor(pallet[colors::background]);
             }
@@ -128,42 +138,64 @@ void Tetris::render(Window* l_window){
     //place rendering code for various stats 
 }
 void Tetris::updatePiece(){
-    for(int y = 0; y<verticalBlocks; y++){
-        for(int x = 0; x<horizontalBlocks; x++){
-            if(board[y][x]!=tileTypes::dead){
-                board[y][x] = tileTypes::clear;
-            }
-        }
-    }
+
+
     elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >gravity){ //incrementing the piece down
         clock.restart(); 
-        if(!collisionCheck(directions::down)){
+        if(!collisionCheck(directions::down,fallingPiece)){
              fallingPiece.position +=directions::down;
         }else{
+            std::cout << "collision down detected!" << std::endl; 
+
             solidify(); //kills the active piece 
-            clearCheck(); //check to see if theres any rows filled 
-            spawner(); // spawns a new piece from the bag 
+            spawner();
+
+            clearCheck(); //check to see if theres any rows filled             spawner(); // spawns a new piece from the bag 
         }
     }
+    updatePieceOnBoard(fallingPiece);    
+    
+}
 
+void Tetris::updatePieceOnBoard(pieceEntity& curPiece){
+    
     for(int y =0; y<4; y++){ //updates tiles on the board to match the piece 
         for(int x =0; x<4; x++){
-            int xBlock = fallingPiece.position.x + x;
-            int yBlock =  fallingPiece.position.y + y;
+            int xBlock = curPiece.position.x + x;
+            int yBlock =  curPiece.position.y + y;
             //std::cout << "potential Block : (" << xBlock << "," << yBlock << ")" <<std::endl;
-            if(fallingPiece.pieceArray[y][x] ==  tileTypes::alive){//check to see if in the piece array, if the piece is alive
-                board[yBlock][xBlock] =1; //updates the board to make that part alive
-                boardColors[yBlock][xBlock] = (colors)fallingPiece.name;  
-                //the next else statement is no longer needed. 
-            }else{ //if the array piece isnt alive, make sure its not alive on the board // 
-                // if(board[yBlock][xBlock] != tileTypes::dead){ //making sure it doesnt clear an already dead piece 
-                //     board[yBlock][xBlock] = tileTypes::clear; //clears the piece now that its not there anymore
-                // }
+            if(curPiece.pieceArray[y][x] ==  tileTypes::alive){//check to see if in the piece array, if the piece is alive
+                board[yBlock][xBlock] = curPiece.pieceState; //updates the board to make that part alive
+                boardColors[yBlock][xBlock] = (colors)curPiece.name;
             }
             
         }
     }
+    // std::cout << "------------------"<<std::endl; 
+    // for(int y = 0; y<verticalBlocks;y++){
+    //     for(int x = 0; x<horizontalBlocks; x++){
+    //         if(board[y][x] != tileTypes::clear){
+    //             std::cout << board[y][x];
+    //         }else{
+    //             std::cout << "."; 
+    //         }
+    //     }
+    //     std::cout << std::endl; 
+    // }
+}
+void Tetris::updateGhostPiece(){
+    //make code to render and potentially place the harddrop where the ghost is
+    // medium priority 
+    ghostPiece = fallingPiece; 
+    ghostPiece.pieceState = tileTypes::ghost; 
+    
+    while(!collisionCheck(directions::down, ghostPiece)){
+        ghostPiece.position.y++;
+    }
+    updatePieceOnBoard(ghostPiece);
+
+
 }
 void Tetris::solidify(){
     usedSave = false; 
@@ -183,6 +215,7 @@ void Tetris::spawner(pieceTypes type){
     
     //make code that spawns each piece in the proper location 
     if(bag2.size()==0){
+        std::cout << "bag2 has been emptied!" << std::endl; 
         bagGenerator(bag2);
     }
 
@@ -195,18 +228,31 @@ void Tetris::spawner(pieceTypes type){
 
     }else{
         fallingPiece.name = type; 
-    }  
+    } 
     for(int y = 0; y<4; y++){//changing the falling piece to be whatever is next in the queue
         for(int x=0; x<4; x++){
             fallingPiece.pieceArray[y][x] = pieces[fallingPiece.name][y][x];
         }
     }
+
+
     sf::Vector2i nullDirection = sf::Vector2i(0,0);
-    if(collisionCheck(nullDirection)){
+    if(collisionCheck(nullDirection,fallingPiece)){
         restart();  
     }
+
+
 }
 void Tetris::bagGenerator(bagContainer& bag){
+
+    /*
+    ---Bag Generation 
+        -In the beginning the game generates the 2 bags 
+        -Everytime a piece is used, the latest piece from bag 2 inserts at the end of bag 1
+        -the bags are each 7 pieces big (every bag contains one of each piece)
+        -bag 2 is only regenerated once bag 2 is empty
+    */
+
     int order[7] = {0,1,2,3,4,5,6};  
     for(int i =0; i <20; i++){ //goes through and randomly swaps pairs - shuffling the bag 
         int rand1 = rand() % 7;
@@ -220,22 +266,22 @@ void Tetris::bagGenerator(bagContainer& bag){
         bag.emplace((pieceTypes)order[i]);
     }
 }
-bool Tetris::collisionCheck(sf::Vector2i& direction){
+bool Tetris::collisionCheck(sf::Vector2i& direction, pieceEntity& curPiece){
     //return false; 
     //make code to set the boundaries floor - wall 
     for(int y =0;  y<4; y++){ //def going to need to go back over this and see if it works 
         for(int x = 0; x<4; x++ ){
-            if(fallingPiece.pieceArray[y][x] == 1){
-                int xCheck = fallingPiece.position.x + x + direction.x;
-                int yCheck =  fallingPiece.position.y + y + direction.y;
+            if(curPiece.pieceArray[y][x] == 1){
+                int xCheck = curPiece.position.x + x + direction.x;
+                int yCheck =  curPiece.position.y + y + direction.y;
 
                 //boundary checks 
                 if(xCheck>=horizontalBlocks || xCheck<0){
-                    std::cout << "horizontal boundary" << std::endl; 
+                    //std::cout << "horizontal boundary" << std::endl; 
                     return true; 
                 }
                 if(yCheck>=verticalBlocks|| yCheck<0){
-                    std::cout << "Verticle Boundary" << std::endl; 
+                   // std::cout << "Verticle Boundary" << std::endl; 
                     return true; 
                 }
                 //dead pieces check 
@@ -243,7 +289,7 @@ bool Tetris::collisionCheck(sf::Vector2i& direction){
 
                 if(board[yCheck][xCheck] == tileTypes::dead){//chance for this to go out of bounds and crash 
                                     //hopefully it doesnt because of the before checks though 
-                    std::cout << "dead found" << std::endl;
+                    //std::cout << "dead found" << std::endl;
                     //std::cout << "(" << xCheck << "," << yCheck <<")"<< std::endl;
 
                     
@@ -271,17 +317,18 @@ void Tetris::clearCheck(){
             //develop an alogirthm that efficiently activates gravity on the remaining tiles 
         }
     }
-    std::cout << "we have " << i << "rows to clear " << std::endl;
+    //std::cout << "we have " << i << "rows to clear " << std::endl;
     if(i!=-1) score+=pointsForRowsCleared[i]; //adds points depending on how many rows were filled
 
     for(auto itr : cleared){
-        std::cout << itr << ","; 
+        //std::cout << itr << ","; 
     }
-    std::cout << std::endl; 
+    //std::cout << std::endl; 
     while(i>=0){
         for(int y = cleared[i]; y>=1;y--){
             for(int x = 0; x<horizontalBlocks; x++){
                 board[y][x] = board[y-1][x];
+                boardColors[y][x] = boardColors[y-1][x];
             }
         }
         i--;
@@ -291,10 +338,7 @@ void Tetris::rowDrop(){//addparemeters to know which rows need fixing
     //develop an alogirthm that efficiently activates gravity on the remaining tiles 
     //also be sure to reward the player with score, depending on various factors 
 }
-void Tetris::ghostPiece(bool replace){
-    //make code to render and potentially place the harddrop where the ghost is
-    // medium priority 
-}
+
 
 void Tetris::rotateC(EventDetails* l_details){
     if(fallingPiece.name == pieceTypes::O) return; 
@@ -397,34 +441,39 @@ void Tetris::savePiece(EventDetails* l_details){
     }
 }
 void Tetris::hardDrop(EventDetails* l_details){
-    return;
-    ghostPiece(true); //probably unfitting leaving this in ghostDrop but the code in ghostdrop is so simular might as well
+    fallingPiece.position = ghostPiece.position;
+    solidify(); //kills the active piece 
+    spawner();
+    clearCheck();
+    
 }
 
 //movement 
 void Tetris::up(EventDetails* l_details){
     //std::cout << "pop!" << std::endl;
     if(fallingPiece.position.y == 0) return; 
-    if(!collisionCheck(directions::up)){
+    if(!collisionCheck(directions::up, fallingPiece)){
         //fallingPiece.position += directions::up; //is only used for debugging purposes. commented out for playing
     }
 }
 void Tetris::down(EventDetails* l_details){
     //std::cout << "pop!" << std::endl; 
-    if(!collisionCheck(directions::down)){
+    if(!collisionCheck(directions::down, fallingPiece)){
         fallingPiece.position += directions::down;
     }
 }
 void Tetris::left(EventDetails* l_details){
     //std::cout << "pop!" << std::endl; 
-    if(!collisionCheck(directions::left)){
+    if(!collisionCheck(directions::left, fallingPiece)){
         fallingPiece.position += directions::left;
+        //updateGhostPiece(); 
     }
 }
 void Tetris::right(EventDetails* l_details){
     //std::cout << "pop!" << std::endl; 
-    if(!collisionCheck(directions::right)){
+    if(!collisionCheck(directions::right, fallingPiece)){
         fallingPiece.position += directions::right;
+        //updateGhostPiece();
     }
 }
 

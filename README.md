@@ -4,11 +4,11 @@ pretty functional now, just not complete.
 # to do list  
 1. Show queue
     - add music 
-2. Add hard drop 
+2. ~~Add hard drop~~ 
 3. Improve the quality of the controls  
 4. make the game look nicer 
     * adjust the way the board size and position is determined to be more dynamic. 
-5. scoring system ~done 
+5.~~ scoring system done ~~
     - need to have a level system as well  
     - make gravity faithful to the games  
 

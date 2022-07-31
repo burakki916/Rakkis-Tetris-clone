@@ -34,7 +34,6 @@ public:
     void restart(); 
     void update(); 
     void render(Window* l_window);
-    void renderSavedPiece(Window* l_window);
     
     
 private:
@@ -93,6 +92,7 @@ private:
         },
     };
     struct pieceEntity{
+        tileTypes pieceState = alive;  
         sf::Vector2i position = sf::Vector2i(0,0);
         pieceTypes name; 
         int pieceArray[4][4]  =
@@ -103,7 +103,7 @@ private:
                 {0, 0, 0, 0},
             };
     };
-    sf::Color pallet[8]={
+    sf::Color pallet[9]={
         sf::Color(114, 159, 250), //blue - bar 
         sf::Color(203, 204, 53), //yellow - O 
         sf::Color(121, 198, 207), //darkblue - J
@@ -112,6 +112,7 @@ private:
         sf::Color(234, 89, 83), //red - Z
         sf::Color(162, 216, 116), //green - S
         sf::Color(41, 45, 62), //background
+        sf::Color(0,23,23) // ghost 
     };
     enum colors{
         blue, 
@@ -122,18 +123,20 @@ private:
         red,
         green,
         background,
+        ghostColor,
     };
     int pointsForRowsCleared[4] = {40,100,300,1200};
     int score = 0; 
     void updatePiece();
+    void updatePieceOnBoard(pieceEntity& curPiece);
     void solidify();
 
     void spawner(pieceTypes type = pieceTypes::non);
     void bagGenerator(bagContainer& bag); 
-    bool collisionCheck(sf::Vector2i& direction); //ngl not even sure how this is going to work lol 
+    bool collisionCheck(sf::Vector2i& direction, pieceEntity& curPiece); //ngl not even sure how this is going to work lol 
     void clearCheck();
     void rowDrop();  
-    void ghostPiece(bool replace= false); // if set to true, the calculated ghost piece will become real
+    void updateGhostPiece(); // if set to true, the calculated ghost piece will become real
 
     void rotateC(EventDetails* l_details);//theres defintely better ways of doing this than what 
     void rotateCC(EventDetails* l_details);// i have set up in these functions. but i think its going to work for now
@@ -152,7 +155,7 @@ private:
 	sf::Time elapsed; 
 
     const int horizontalBlocks = 10;
-    const int bonusHeight = 1; 
+    const int bonusHeight = 4; 
     const int verticalBlocks = 20 + bonusHeight; 
     
     tileContainer board;
@@ -167,6 +170,8 @@ private:
     int queueSize = 4; 
 
     pieceEntity fallingPiece;
+    pieceEntity ghostPiece; 
+
     pieceTypes savedPiece = pieceTypes::non; 
     bool usedSave = false;   
     bagContainer bag1;

@@ -1,4 +1,7 @@
+#define SFML_STATIC
 #include "Game.h"
+
+
 int main()
 {
     Game newGame;
@@ -8,4 +11,5 @@ int main()
         newGame.Render(); 
     }
 }
+
 

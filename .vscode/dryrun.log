@@ -1,5 +1,5 @@
 make.exe --dry-run --keep-going --print-directory
 make.exe: Entering directory 'f:/Coding/cpp - in progress/Tetris'
-g++ src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp -Wall -Wextra -std=c++17 -ggdb -w -Iinclude -I C:\SFML-2.5.1\include -Llib -L C:\SFML-2.5.1\lib -lsfml-graphics -lsfml-window -lsfml-system  -o bin/main
+g++ src/main.cpp src/Window.cpp src/Tetris.cpp src/Game.cpp src/EventManager.cpp -Wall -Wextra -std=c++11 -ggdb -w -static  -Iinclude -I C:\SFML-2.5.1\include -DSFML_STATIC -Llib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype  -o bin/main
 make.exe: Leaving directory 'f:/Coding/cpp - in progress/Tetris'
  
