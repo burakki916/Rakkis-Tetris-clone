@@ -1,6 +1,6 @@
 #include "Game.h"
 Game::Game()
-	:m_window("Rakki's Perfect Tetris Ripoff", sf::Vector2u(1020, 720))
+	:m_window("Rakki's Perfect Tetris Ripoff", sf::Vector2u(1280, 720))
 {
 	//m_window.ToggleFullscreen();
 

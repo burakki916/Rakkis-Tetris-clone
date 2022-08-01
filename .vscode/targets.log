@@ -6,7 +6,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 31 01:21:07 2022
+# Make data base, printed on Sun Jul 31 04:44:20 2022
 
 # Variables
 
@@ -31,7 +31,8 @@ HOMEDRIVE = C:
 # automatic
 @F = $(notdir $@)
 # automatic
-^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
+^D = $(patsubst 
+ %/,%,$(patsubst %\,%,$(dir $^)))
 # makefile
 CURDIR := f:/Coding/cpp - in progress/Tetris
 # default
@@ -79,7 +80,7 @@ NUMBER_OF_PROCESSORS = 4
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # makefile (from 'Makefile', line 7)
-LIB := lib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype
+LIB := lib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-audio-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync
 # automatic
@@ -131,8 +132,7 @@ MAKE_VERSION := 4.2
 # makefile (from 'Makefile', line 6)
 INCLUDE := include -I C:\SFML-2.5.1\include -DSFML_STATIC
 # environment
-PROGRAMFILES(X86) = C:\Program F 
-iles (x86)
+PROGRAMFILES(X86) = C:\Program Files (x86)
 # automatic
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
 # environment
@@ -220,10 +220,10 @@ USERDOMAIN_ROAMINGPROFILE = DESKTOP-TL8QFHP
 
 # Directories
 
-# . (key f:/Coding/cpp - in progress/Tetris, mtime 1658825619ll): 24 files, no impossibilities.
+# . (key f:/Coding/cpp - in progress/Tetris, mtime 1659256892ll): 16 files, no impossibilities.
 # src (key f:/Coding/cpp - in progress/Tetris/src, mtime 1658825613ll): 11 files, no impossibilities.
 
-# 35 files, no impossibilities in 2 directories.
+# 27 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -243,7 +243,7 @@ all: bin/main
 # Not a target:
 src/Tetris.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-26 05:23:07
+#  Last modified 2022-07-31 04:35:49
 #  File has been updated.
 #  Successfully updated.
 
@@ -256,7 +256,7 @@ src/Tetris.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-31 01:19:34
+#  Last modified 2022-07-31 04:40:46
 #  File has been updated.
 #  Successfully updated.
 
@@ -298,7 +298,7 @@ clean:
 # Not a target:
 src/main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-28 07:43:40
+#  Last modified 2022-07-31 04:11:20
 #  File has been updated.
 #  Successfully updated.
 
@@ -344,12 +344,12 @@ src/Window.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 44 / storage = 504 B / avg = 11 B
-# current buf: size = 8174 B / used = 504 B / count = 44 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 332 B / avg = 9 B
+# current buf: size = 8174 B / used = 332 B / count = 36 / avg = 9 B
 
-# strcache performance: lookups = 59 / hit rate = 25%
+# strcache performance: lookups = 51 / hit rate = 29%
 # hash-table stats:
-# Load=44/8192=1%, Rehash=0, Collisions=2/59=3%
-# Finished Make data base on Sun Jul 31 01:21:07 2022
+# Load=36/8192=0%, Rehash=0, Collisions=2/51=4%
+# Finished Make data base on Sun Jul 31 04:44:20 2022
 
  

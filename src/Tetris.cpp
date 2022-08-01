@@ -13,13 +13,21 @@ Tetris::Tetris(){//ugg i gottta fix this default constructor shit later;
     if(!textFont.loadFromFile("./wendy.ttf")){
         std::cout << "failed to load font! " << std::endl; 
     }
+    
+    if (!music.openFromFile("tetris.wav")){
+        std::cout << "failed to load music!" << std::endl; 
+    }           
+    music.play();
+    music.setVolume(25);
+    music.setLoop(true);                                                            
 }
 void Tetris::initialize(){
     //insert code for initializing the event manager to make bindings for the various things that require input 
-
+    totalRowsCleared = 0;
     board.clear(); 
     boardColors.clear();
     score = 0; 
+    level = 1; 
     //make the board 
     for(int y = 0; y < verticalBlocks; y++){
         std::vector<int> curRow;
@@ -46,7 +54,9 @@ void Tetris::restart(){
 void Tetris::initializeInput(Window* l_window){
     std::cout << "trying to handle input" << std::endl; 
     l_window->GetEventManager()->AddCallback("left", &Tetris::left, this);
+    l_window->GetEventManager()->AddCallback("leftU", &Tetris::leftU, this);
     l_window->GetEventManager()->AddCallback("right", &Tetris::right, this);
+    l_window->GetEventManager()->AddCallback("rightU", &Tetris::rightU, this);
     l_window->GetEventManager()->AddCallback("up", &Tetris::up, this);
     l_window->GetEventManager()->AddCallback("down", &Tetris::down, this);
     l_window->GetEventManager()->AddCallback("rotateC", &Tetris::rotateC, this);
@@ -56,6 +66,7 @@ void Tetris::initializeInput(Window* l_window){
     l_window->GetEventManager()->Update(); 
 } 
 void Tetris::update(){
+    handleMovement();
     //code for updating the position of the falling piece 
     for(int y = 0; y<verticalBlocks; y++){ //make this into a function called clear board sometime 
         for(int x = 0; x<horizontalBlocks; x++){
@@ -67,6 +78,10 @@ void Tetris::update(){
     updateGhostPiece(); 
     updatePiece(); 
     //if bag2.size = 0 bagGenerator(bag2)
+
+    //gravity formula, made by me. prob bad but idc 
+
+
 
 }
 void Tetris::render(Window* l_window){
@@ -141,7 +156,7 @@ void Tetris::updatePiece(){
 
 
     elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >gravity){ //incrementing the piece down
+    if(elapsed.asMilliseconds() >gravity[gravityLevel]){ //incrementing the piece down
         clock.restart(); 
         if(!collisionCheck(directions::down,fallingPiece)){
              fallingPiece.position +=directions::down;
@@ -150,7 +165,6 @@ void Tetris::updatePiece(){
 
             solidify(); //kills the active piece 
             spawner();
-
             clearCheck(); //check to see if theres any rows filled             spawner(); // spawns a new piece from the bag 
         }
     }
@@ -208,23 +222,24 @@ void Tetris::solidify(){
             }
         }
     }
+
     clearCheck(); 
 }
 
 void Tetris::spawner(pieceTypes type){
-    
+    handleLeveling(); 
     //make code that spawns each piece in the proper location 
     if(bag2.size()==0){
-        std::cout << "bag2 has been emptied!" << std::endl; 
+        //std::cout << "bag2 has been emptied!" << std::endl; 
         bagGenerator(bag2);
     }
 
     fallingPiece.position = sf::Vector2i((horizontalBlocks/2)-2,0);
     if(type == pieceTypes::non ){
         fallingPiece.name = (pieceTypes)bag1.front();
-        bag1.pop();
-        bag1.emplace(bag2.front());
-        bag2.pop(); 
+        bag1.erase(bag1.begin());
+        bag1.push_back(bag2.front());
+        bag2.erase(bag2.begin()); 
 
     }else{
         fallingPiece.name = type; 
@@ -234,6 +249,15 @@ void Tetris::spawner(pieceTypes type){
             fallingPiece.pieceArray[y][x] = pieces[fallingPiece.name][y][x];
         }
     }
+    // std::cout << "bag1 : ";
+    // for(int i =0; i<bag1.size(); i++){
+    //     std::cout << bag1.at(i) << ","; 
+    // }
+    // std::cout << "\n bag2 : "; 
+    // for(int i =0; i<bag2.size(); i++){
+    //     std::cout << bag2.at(i) << ","; 
+    // }
+    // std::cout << "\n";
 
 
     sf::Vector2i nullDirection = sf::Vector2i(0,0);
@@ -263,7 +287,7 @@ void Tetris::bagGenerator(bagContainer& bag){
         std::swap(order[rand1],order[rand2]);
     } 
     for(int i = 0; i<7; i++){
-        bag.emplace((pieceTypes)order[i]);
+        bag.push_back((pieceTypes)order[i]);
     }
 }
 bool Tetris::collisionCheck(sf::Vector2i& direction, pieceEntity& curPiece){
@@ -311,14 +335,15 @@ void Tetris::clearCheck(){
         }
         //std::cout << "Y : " << RowCount << std::endl; 
         if(RowCount==horizontalBlocks){
-            i++; 
+            i++;
+            totalRowsCleared++; 
             cleared[i] = y; 
             //store which row it happened on 
             //develop an alogirthm that efficiently activates gravity on the remaining tiles 
         }
     }
     //std::cout << "we have " << i << "rows to clear " << std::endl;
-    if(i!=-1) score+=pointsForRowsCleared[i]; //adds points depending on how many rows were filled
+    if(i!=-1) score+= (pointsForRowsCleared[i]*(level+1)); //adds points depending on how many rows were filled
 
     for(auto itr : cleared){
         //std::cout << itr << ","; 
@@ -445,7 +470,7 @@ void Tetris::hardDrop(EventDetails* l_details){
     solidify(); //kills the active piece 
     spawner();
     clearCheck();
-    
+
 }
 
 //movement 
@@ -463,25 +488,86 @@ void Tetris::down(EventDetails* l_details){
     }
 }
 void Tetris::left(EventDetails* l_details){
-    //std::cout << "pop!" << std::endl; 
     if(!collisionCheck(directions::left, fallingPiece)){
         fallingPiece.position += directions::left;
+        movementClock.restart();
+        movementTickTime = 200;   
         //updateGhostPiece(); 
     }
+    directionHeld[possibleDirections::lefty] =true; 
+}
+void Tetris::leftU(EventDetails* l_details){ 
+    directionHeld[possibleDirections::lefty] = false; 
 }
 void Tetris::right(EventDetails* l_details){
-    //std::cout << "pop!" << std::endl; 
+
     if(!collisionCheck(directions::right, fallingPiece)){
         fallingPiece.position += directions::right;
+        movementClock.restart();
+        movementTickTime = 200; 
         //updateGhostPiece();
+    }
+    directionHeld[possibleDirections::righty] =true; 
+
+}
+void Tetris::rightU(EventDetails* l_details){
+    directionHeld[possibleDirections::righty] = false; 
+
+}
+
+void Tetris::handleMovement(){
+    movementClockElapsed = movementClock.getElapsedTime();
+    if(movementClockElapsed.asMilliseconds() > movementTickTime){
+        movementTickTime = 50;   
+        movementClock.restart(); 
+        if(directionHeld[lefty]){
+            if(!collisionCheck(directions::left, fallingPiece)){
+                fallingPiece.position += directions::left;
+            }
+        }
+        if(directionHeld[righty]){
+            if(!collisionCheck(directions::right, fallingPiece)){
+                fallingPiece.position += directions::right;
+            }
+        }
     }
 }
 
+
+
+
 void Tetris::handleText(Window* window){
     scoreText.setFont(textFont);
-    scoreText.setString ("Score : \n " + std::to_string(score)); 
+    scoreText.setString ("Score : \n " + std::to_string(score) + "\n\n Gravity : \n " + std::to_string(gravity[gravityLevel]) + "\n Level: " + std::to_string(level)); 
     scoreText.setCharacterSize(50);
     scoreText.setFillColor(pallet[colors::blue]); //add your white then make it this
     scoreText.setPosition(window->GetWindowSize().x*.80, 100); //make this better 
     window->Draw(scoreText); 
+}
+
+void Tetris::handleLeveling(){
+    if(totalRowsCleared>level*10){
+        std::cout << "totalRowsCleared : " << totalRowsCleared << std::endl; 
+        level++; 
+    } 
+    
+    if(level<=9){
+        gravityLevel = level;
+    }
+    if(level>=10){
+        gravityLevel = 10; 
+    }
+    if(level>=13){
+        gravityLevel = 11; 
+    }
+    if(level>=16){
+        gravityLevel = 12; 
+    }
+    if(level>=19){
+        gravityLevel = 13; 
+    }
+    if(level>=29){
+        gravityLevel = 14; 
+    }
+
 }

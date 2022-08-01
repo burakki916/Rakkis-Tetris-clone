@@ -4,7 +4,7 @@ CXX_FLAGS := -Wall -Wextra -std=c++11 -ggdb -w -static
 BIN		:= bin
 SRC		:= src
 INCLUDE	:= include -I C:\SFML-2.5.1\include -DSFML_STATIC
-LIB		:= lib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype
+LIB		:= lib -L C:\mySFML\lib -lsfml-graphics-s -lsfml-audio-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg
 
 LIBRARIES	:= C:\mySFML\lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -static-libgcc -static-libstdc++
 EXECUTABLE	:= main

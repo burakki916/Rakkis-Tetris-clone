@@ -11,6 +11,8 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>   
+#include <math.h>
+
 
 #include "Window.h"
 //maybe i should put this stuff in a namespace?? 
@@ -24,7 +26,7 @@ struct directions{
 
 
 using tileContainer = std::vector<std::vector<int>>;
-using bagContainer = std::queue<int>;
+using bagContainer = std::vector<int>;
 class Tetris
 {
 public:
@@ -125,8 +127,24 @@ private:
         background,
         ghostColor,
     };
+    
+
+
+
+    //scoring - leveling - gravity 
+    int score = 0;
     int pointsForRowsCleared[4] = {40,100,300,1200};
-    int score = 0; 
+    int targetScore = 2400; 
+    float gravity[15] = {
+        800,720,630,550,470,380,300,220,130,100,80,70,50,30,20
+    }; // in how many miliseconds till it increments
+    int gravityLevel;
+    int totalRowsCleared = 0; 
+    int level = 1;  
+    void handleLeveling(); 
+
+ 
+
     void updatePiece();
     void updatePieceOnBoard(pieceEntity& curPiece);
     void solidify();
@@ -148,37 +166,58 @@ private:
     void up(EventDetails* l_details);
     void down(EventDetails* l_details);
     void left(EventDetails* l_details);
+    void leftU(EventDetails* l_details);
     void right(EventDetails* l_details); 
+    void rightU(EventDetails* l_details);
+
+    enum possibleDirections{
+        lefty,righty
+    };
+    bool directionHeld[2] = {0,0};
+    void handleMovement();
 
     //timing 
     sf::Clock clock; 
 	sf::Time elapsed; 
 
+    sf::Clock movementClock; 
+    sf::Time movementClockElapsed; 
+    float movementTickTime = 150; 
+    
+    //vectors for containing the board piece and color information 
+    tileContainer board;
+    std::vector<std::vector<colors>> boardColors;
+//board configurgation stuff 
+    //board sizeing 
     const int horizontalBlocks = 10;
     const int bonusHeight = 4; 
     const int verticalBlocks = 20 + bonusHeight; 
-    
-    tileContainer board;
-    std::vector<std::vector<colors>> boardColors;
+
+    //positioning n stuff 
     sf::Vector2f boardSizeRel = sf::Vector2f(1,1);
     sf::Vector2f boardSizeExact = sf::Vector2f(0,0);
     sf::Vector2f boardPos= sf::Vector2f(0,0);
     sf::Vector2f margin =  sf::Vector2f(0,0);
     float tileBoarderSize = 1;
-    float gravity = 400; // in how many miliseconds till it increments 
-    //need to figure out a way to make the gravity match the real games 
-    int queueSize = 4; 
+ 
+    
 
     pieceEntity fallingPiece;
     pieceEntity ghostPiece; 
 
     pieceTypes savedPiece = pieceTypes::non; 
     bool usedSave = false;   
+
     bagContainer bag1;
     bagContainer bag2;
+    int queueSize = 4; 
 
+    //handeling text rendering 
     sf::Font textFont; 
     sf::Text scoreText; 
     void handleText(Window* window); 
+
+    //music 
+    sf::Music music;
       
 };
