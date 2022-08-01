@@ -1,5 +1,5 @@
-make.exe --dry-run --keep-going --print-directory
+make.exe --dry-run --always-make --keep-going --print-directory
 make: Entering directory 'c:/Users/makai/Documents/code/cpp/Tetris'
-make: Nothing to be done for 'all'.
+g++ src/EventManager.cpp src/Game.cpp src/Tetris.cpp src/Window.cpp src/main.cpp -Wall -Wextra -std=c++11 -ggdb -w -static  -Iinclude -I C:\SFML-2.5.1\include -DSFML_STATIC -Llib -L C:\SFML-2.5.1\lib -lsfml-graphics-s -lsfml-audio-s -lsfml-window-s -lsfml-system-s -lgdi32 -lwinmm -lopengl32 -lfreetype -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg  -o bin/main.exe
 make: Leaving directory 'c:/Users/makai/Documents/code/cpp/Tetris'
  

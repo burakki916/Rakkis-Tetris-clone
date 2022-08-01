@@ -1,52 +1,49 @@
 #include "Game.h"
-Game::Game()
-	:m_window("Rakki's Perfect Tetris Ripoff", sf::Vector2u(1280, 720))
+Game::Game() : m_window("Rakki's Perfect Tetris Ripoff", sf::Vector2u(1280, 720))
 {
-	//m_window.ToggleFullscreen();
+    // m_window.ToggleFullscreen();
 
-	//m_window.GetEventManager()->AddCallback("Move", &Game::MoveSprite, this);
-	tetris.initialize(); 
-	tetris.initializeInput(&m_window);
+    // m_window.GetEventManager()->AddCallback("Move", &Game::MoveSprite, this);
+    tetris.initialize();
+    tetris.initializeInput(&m_window);
 }
-Game::~Game() {}
+Game::~Game()
+{
+}
 
 void Game::handleInput()
 {
-
 }
 
 void Game::Update()
 {
-	m_window.Update(); 
-	// m_elapsed = m_clock.getElapsedTime(); 
-	// float timestep = 1.0f / 0.011;
-	// if (m_elapsed > sf::seconds(5)) {
-		
-	// }
-	tetris.update(); 
-	
+    m_window.Update();
+    // m_elapsed = m_clock.getElapsedTime();
+    // float timestep = 1.0f / 0.011;
+    // if (m_elapsed > sf::seconds(5)) {
+
+    // }
+    tetris.update();
 }
 
 void Game::Render()
 {
-	m_window.BeginDraw(); //clears screen
-	tetris.render(&m_window);
-	m_window.EndDraw(); // display
+    m_window.BeginDraw(); // clears screen
+    tetris.render(&m_window);
+    m_window.EndDraw(); // display
 }
 
-Window* Game::GetWindow()
+Window *Game::GetWindow()
 {
-	return &m_window;
+    return &m_window;
 }
 
 sf::Time Game::GetElapsed()
 {
-	return m_elapsed; 
+    return m_elapsed;
 }
 
 void Game::RestartClock()
 {
-	m_elapsed = m_clock.restart(); 
+    m_elapsed = m_clock.restart();
 }
-
-
