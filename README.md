@@ -9,8 +9,12 @@ pretty functional now, just not complete.
 4. make the game look nicer 
     * adjust the way the board size and position is determined to be more dynamic. 
 5.~~ scoring system done ~~
-   ~~ - need to have a level system as well  ~~
-    ~~- make gravity faithful to the games ~~ - kindaish 
+
+    make a system to save scores / level data 
+    make it so where you can chose what level you start on 
+
+   ~~need to have a level system as well~~
+    ~~-make gravity faithful to the games~~ - kindaish 
 
 6. title screen potentially  
 7. settings to configure the controls  
