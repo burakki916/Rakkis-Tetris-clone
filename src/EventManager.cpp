@@ -134,6 +134,7 @@ void EventManager::LoadBindings()
 	}
 	std::string line; 
 	while (std::getline(bindings, line)) {
+		if(line[0] == '#') continue; 
 		std::stringstream keystream(line);
 		std::string callbackName; 
 		keystream >> callbackName; //writes the first word of keystream to callBackName

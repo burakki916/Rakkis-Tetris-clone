@@ -23,7 +23,7 @@ void Window::Setup(const std::string& l_title, const sf::Vector2u& l_size){
 	m_eventManager.AddCallback("Window_close", &Window::Close, this); 
 	m_eventManager.AddCallback("cunt", &Window::cunt, this); 
 	Create(); 
-	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)
 	// {
 	// 	// move left...
 	// }
@@ -35,7 +35,7 @@ void Window::Create() {
 
 	auto style = (m_isFullScreen ? sf::Style::Fullscreen : sf::Style::Default);
 	m_window.create({ m_windowSize.x,m_windowSize.y,32 }, m_windowTitle, style,settings);	
-
+	//m_window.requestFocus(); 
 }
 void Window::Destroy() {
 	m_window.close();

@@ -1,15 +1,16 @@
 Window_close 0:0
 FullScreen_toggle 5:89
 Move 9:0 24:38
+
 left 5:0
 leftU 6:0
 right 5:3
 rightU 6:3
-up 5:22
-upU 6:22
+up 5:80
+upU 6:80
 down 5:18
 downU 6:18
-save 5:1
-rotateC 5:13
-rotateCC 5:12
+save 5:11
+rotateC 5:10
+rotateCC 5:72
 hardDrop 5:22

@@ -24,7 +24,7 @@ void Game::Update()
 		
 	// }
 	tetris.update(); 
-
+	
 }
 
 void Game::Render()

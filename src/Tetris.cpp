@@ -58,7 +58,8 @@ void Tetris::initializeInput(Window* l_window){
     l_window->GetEventManager()->AddCallback("right", &Tetris::right, this);
     l_window->GetEventManager()->AddCallback("rightU", &Tetris::rightU, this);
     l_window->GetEventManager()->AddCallback("up", &Tetris::up, this);
-    l_window->GetEventManager()->AddCallback("down", &Tetris::down, this);
+    l_window->GetEventManager()->AddCallback("down", &Tetris::down, this);\
+    l_window->GetEventManager()->AddCallback("downU", &Tetris::downU, this);
     l_window->GetEventManager()->AddCallback("rotateC", &Tetris::rotateC, this);
     l_window->GetEventManager()->AddCallback("rotateCC", &Tetris::rotateCC, this);
     l_window->GetEventManager()->AddCallback("save", &Tetris::savePiece, this);
@@ -156,7 +157,12 @@ void Tetris::updatePiece(){
 
 
     elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >gravity[gravityLevel]){ //incrementing the piece down
+    float gravityToUse = gravity[gravityLevel];
+    if(softDropping && softDroppingSpeed<gravity[gravityLevel]){
+        // std::cout << "using softDropping speed" << std::endl; 
+        gravityToUse = softDroppingSpeed;
+    }
+    if(elapsed.asMilliseconds() > gravityToUse){ //incrementing the piece down
         clock.restart(); 
         if(!collisionCheck(directions::down,fallingPiece)){
              fallingPiece.position +=directions::down;
@@ -482,10 +488,10 @@ void Tetris::up(EventDetails* l_details){
     }
 }
 void Tetris::down(EventDetails* l_details){
-    //std::cout << "pop!" << std::endl; 
-    if(!collisionCheck(directions::down, fallingPiece)){
-        fallingPiece.position += directions::down;
-    }
+    softDropping = true; 
+}
+void Tetris::downU(EventDetails* l_details){
+    softDropping = false; 
 }
 void Tetris::left(EventDetails* l_details){
     if(!collisionCheck(directions::left, fallingPiece)){

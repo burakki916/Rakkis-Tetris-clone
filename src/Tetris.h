@@ -165,6 +165,10 @@ private:
     //movement 
     void up(EventDetails* l_details);
     void down(EventDetails* l_details);
+    void downU(EventDetails* l_details);
+    bool softDropping = false;  
+    int softDroppingSpeed = 20;
+
     void left(EventDetails* l_details);
     void leftU(EventDetails* l_details);
     void right(EventDetails* l_details); 
@@ -173,7 +177,7 @@ private:
     enum possibleDirections{
         lefty,righty
     };
-    bool directionHeld[2] = {0,0};
+    bool directionHeld[3] = {0,0};
     void handleMovement();
 
     //timing 
