@@ -775,4 +775,4 @@ void Tetris::waitForKeyPress(Window *l_window)
             continue;
         }
     }
-}
+} // yes
