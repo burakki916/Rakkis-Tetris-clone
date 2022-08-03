@@ -5,8 +5,9 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Mon Aug 01 04:56:15 2022
+# Make data base, printed on Mon Aug 01 05:46:39 2022
 
 # Variables
 
@@ -35,7 +36,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_65556_REDVVNRJTLZBEGQN
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_25500_BNUAGSSTJOFBAGFQ
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -83,7 +84,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 65556
+VSCODE_PID = 25500
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -233,7 +234,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD
 # Not a target:
 src/Game.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 04:04:04
+#  Last modified 2022-08-01 05:06:15
 #  File has been updated.
 #  Successfully updated.
 
@@ -247,14 +248,14 @@ Makefile:
 # Not a target:
 src/EventManager.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 03:45:50
+#  Last modified 2022-08-01 05:00:09
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 src/main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 03:51:16
+#  Last modified 2022-08-01 05:28:53
 #  File has been updated.
 #  Successfully updated.
 
@@ -291,7 +292,7 @@ run: clean all
 # Not a target:
 src/Tetris.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 04:56:11
+#  Last modified 2022-08-01 05:00:33
 #  File has been updated.
 #  Successfully updated.
 
@@ -314,7 +315,7 @@ bin/main.exe: src/EventManager.cpp src/Game.cpp src/Tetris.cpp src/Window.cpp sr
 # automatic
 # ^ := src/EventManager.cpp src/Game.cpp src/Tetris.cpp src/Window.cpp src/main.cpp
 # automatic
-# ? := src/Tetris.cpp
+# ? := src/EventManager.cpp src/Game.cpp src/Tetris.cpp src/Window.cpp src/main.cpp
 # automatic
 # | := 
 # variable set hash-table stats:
@@ -331,7 +332,7 @@ bin/main.exe: src/EventManager.cpp src/Game.cpp src/Tetris.cpp src/Window.cpp sr
 # Not a target:
 src/Window.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 04:04:14
+#  Last modified 2022-08-01 04:59:14
 #  File has been updated.
 #  Successfully updated.
 
@@ -349,6 +350,6 @@ src/Window.cpp:
 # strcache performance: lookups = 52 / hit rate = 30%
 # hash-table stats:
 # Load=36/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Mon Aug 01 04:56:15 2022
+# Finished Make data base on Mon Aug 01 05:46:39 2022
 
  

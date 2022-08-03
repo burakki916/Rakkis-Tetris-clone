@@ -172,6 +172,26 @@ void Tetris::render(Window *l_window)
             }
         }
     }
+    savedTileSize = (margin.x * (1 - savedPadding)) / 20;
+    for (int i = 0; i < 4; i++)
+    {
+        int pieceToRender = bag1[i];
+        sf::Vector2f queueNumPosition = sf::Vector2f(savedTilePosition.x, i * savedTileSize * 4 * 1.20 + 300);
+        for (int y = 0; y < 4; y++)
+        {
+            for (int x = 0; x < 4; x++)
+            {
+                if (pieces[pieceToRender][y][x] == 1)
+                {
+                    sf::RectangleShape tile;
+                    tile.setSize(sf::Vector2f(savedTileSize - 1, savedTileSize - 1));
+                    tile.setPosition(queueNumPosition.x + x * savedTileSize, queueNumPosition.y + y * savedTileSize);
+                    tile.setFillColor(pallet[pieceToRender]);
+                    l_window->Draw(tile);
+                }
+            }
+        }
+    }
 
     handleText(l_window); // handles rendering the score
                           // place rendering code for various stats
@@ -195,7 +215,9 @@ void Tetris::updatePiece()
         else
         {
             std::cout << "collision down detected!" << std::endl;
-
+            updateScores(score, level);
+            showScores();
+            waitForKeyPress();
             solidify(); // kills the active piece
             spawner();
             clearCheck(); // check to see if theres any rows filled spawner(); //
@@ -224,6 +246,7 @@ void Tetris::updatePieceOnBoard(pieceEntity &curPiece)
             }
         }
     }
+    //! hello there!
     // std::cout << "------------------"<<std::endl;
     // for(int y = 0; y<verticalBlocks;y++){
     //     for(int x = 0; x<horizontalBlocks; x++){
@@ -692,5 +715,64 @@ void Tetris::handleLeveling()
     if (level >= 29)
     {
         gravityLevel = 14;
+    }
+}
+void Tetris::showScores(Window *l_window)
+{
+    sf::Vector2f scoreSize = l_window->GetWindowSize().x * .20, l_window->GetWindowSize().y * .80;
+    sf::Vector2f scorePosition = sf::Vector2f(l_window->GetWindowSize().x / 2 - scoreSize / 2, 100);
+    sf::RectangleShape scoreBackDrop;
+    scoreBackDrop.setSize(scoreSize);
+    scoreBackDrop.setPosition(scorePosition);
+    scoreBackDrop.setFilColor(sf::Color::Black); // to change later
+    l_window->Draw(scoreBackDrop);
+    for (int i = 0; i < scores.size() || i < 10; i++)
+    {
+        sf::Text curScore;
+        curScore.setFont(textFont);
+        curScore.setString(i + ". Score : " + scores[i].first + " Level  : " + scores[i].second);
+        curScore.setPosition(scorePosition.x + 10, scorePosition.y + (i * scoreSize - 20) / 10);
+        curScore.setFillColor(pallet[colors::blue]);
+        curScore.setCharacterSize((scoreSize.y - 50) / 10);
+        window->Draw(curScore);
+    }
+}
+void Tetris::updateScores(int latestLevel, int latestScore)
+{
+    std::string scoreOutput;
+    for (auto itr; scores)
+    {
+        if (latestScore > itr.first)
+        {
+            scores.insert(itr - 1, std::pair<int, int>(latestScore, latestLevel));
+            scoreOutput += latestScore + "," + latestLevel + "\n";
+        }
+        scoreOutput += itr.first + "," + itr.second + "\n";
+    }
+    std::ofstream scoreFile;
+    scoreFile.open("scores.txt");
+    scoreFile << scoreOutput;
+}
+void Tetris::loadScoreFile()
+{
+    std::fstream scoreFile;
+    scoreFile.open("scores.txt");
+    std::string line;
+    while (std::getline(scoreFile, line))
+    {
+        int curScore = std::stoi(line.substr(0, line.find(",")));
+        int curLevel = std::stoi(line.substr(line.find(","), line.size()));
+        scores.insert(scores.front(), std::pair<int, int>(curScore, curLevel));
+    }
+}
+void Tetris::waitForKeyPress(Window *l_window)
+{
+    sf::Event event;
+    while (l_window->getWindow().pollEvent(event))
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            continue;
+        }
     }
 }

@@ -76,6 +76,7 @@ void keyconfigy()
 }
 sf::Keyboard::Key getDown()
 {
+
     while (true)
     {
         for (int i = 0; i < sf::Keyboard::KeyCount; i++)

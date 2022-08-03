@@ -13,6 +13,12 @@ Game::~Game()
 
 void Game::handleInput()
 {
+    // TODO: HANDLE INPUT!!
+    //! or else something bad will happen
+    //*important
+    //** suport important
+    //? hello?
+    //@param myParam this
 }
 
 void Game::Update()
